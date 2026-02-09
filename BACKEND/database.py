@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://localhost:27017")
-db = client["social_media"]
+client = MongoClient("mongodb://127.0.0.1:27017")
 
-users = db["users"]
-posts = db["posts"]
+db = client["social_app"]
+
+users = db["users"]   # collection

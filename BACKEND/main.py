@@ -1,35 +1,45 @@
 from fastapi import FastAPI, HTTPException
-from models import User, Post
-from database import users, posts
-from auth import hash_password, verify_password, create_token
+from pydantic import BaseModel
+from database import users   # 👈 THIS LINE IS REQUIRED
+from auth_utils import hash_password, verify_password, create_token
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
-@app.post("/register")
-def register(user: User):
+# ✅ CORS must come here
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+
+
+@app.post("/auth/signup")
+def signup(user: UserIn):
     if users.find_one({"username": user.username}):
-        raise HTTPException(400, "User exists")
+        raise HTTPException(status_code=400, detail="User already exists")
 
     users.insert_one({
         "username": user.username,
         "password": hash_password(user.password)
     })
-    return {"message": "User registered"}
 
-@app.post("/login")
-def login(user: User):
+    return {"message": "Signup successful"}
+
+
+@app.post("/auth/login")
+def login(user: UserIn):
     db_user = users.find_one({"username": user.username})
+
     if not db_user or not verify_password(user.password, db_user["password"]):
-        raise HTTPException(401, "Invalid credentials")
+        raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    token = create_token({"username": user.username})
+    token = create_token(user.username)
     return {"token": token}
-
-@app.post("/posts")
-def create_post(post: Post):
-    posts.insert_one(post.dict())
-    return {"message": "Post created"}
-
-@app.get("/posts")
-def get_posts():
-    return list(posts.find({}, {"_id": 0}))
