@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2>Social App</h2>
+
+    <ul>
+      <li routerLink="feed" routerLinkActive="active">Feed</li>
+      <li routerLink="create" routerLinkActive="active">Create Post</li>
+    </ul>
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

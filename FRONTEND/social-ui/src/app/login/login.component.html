@@ -1,0 +1,26 @@
+<div class="auth-card">
+  <h2>Login</h2>
+
+  <!-- Username -->
+  <input
+    [(ngModel)]="username"
+    placeholder="Username"
+    type="text"
+  />
+
+  <!-- Password -->
+  <input
+    [(ngModel)]="password"
+    type="password"
+    placeholder="Password"
+  />
+
+  <!-- Login Button -->
+  <button (click)="login()">Login</button>
+
+  <!-- Signup Navigation -->
+  <p class="signup-text">
+    Don’t have an account?
+    <a routerLink="/signup">Sign up</a>
+  </p>
+</div>

@@ -1,0 +1,11 @@
+<h2>Feed</h2>
+
+<input [(ngModel)]="content" placeholder="What's on your mind?" />
+<button (click)="post()">Post</button>
+
+<hr />
+
+<div *ngFor="let p of posts">
+  <b>{{ p.username }}</b>
+  <p>{{ p.content }}</p>
+</div>

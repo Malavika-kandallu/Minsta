@@ -1,0 +1,11 @@
+<div class="create-post-container">
+  <h2>Create Post</h2>
+
+  <textarea
+    [(ngModel)]="content"
+    placeholder="What's on your mind?"
+    rows="5"
+  ></textarea>
+
+  <button (click)="submitPost()">Post</button>
+</div>

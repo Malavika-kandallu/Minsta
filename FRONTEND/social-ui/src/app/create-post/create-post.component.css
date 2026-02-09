@@ -1,0 +1,26 @@
+.create-post-container {
+  width: 500px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+textarea {
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+button {
+  width: 120px;
+  padding: 8px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #125aa0;
+}

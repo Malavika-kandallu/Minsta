@@ -1,0 +1,29 @@
+/* Full page layout */
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.title {
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* Side-by-side container */
+.auth-container {
+  display: flex;
+  gap: 40px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+  }
+}
