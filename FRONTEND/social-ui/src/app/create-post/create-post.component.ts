@@ -3,6 +3,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-post',
@@ -14,18 +15,43 @@ import { FormsModule } from '@angular/forms';
 export class CreatePostComponent {
   content: string = '';
 
+  // ✅ Logged-in username
+  username: string = '';
+
+  constructor(private http: HttpClient) {
+    // SSR safe localStorage access
+    if (typeof window !== 'undefined') {
+      this.username = localStorage.getItem('username') || '';
+    }
+  }
+
   submitPost() {
     if (!this.content.trim()) {
       alert('Post cannot be empty');
       return;
     }
 
-    // For now just log — later connect to backend
-    console.log('Post submitted:', this.content);
+    if (!this.username) {
+      alert('User not logged in ❌');
+      return;
+    }
 
-    alert('Post created successfully ✅');
+    const postData = {
+      username: this.username,
+      content: this.content,
+    };
 
-    // Clear textarea
-    this.content = '';
+    this.http
+      .post('http://localhost:8000/api/posts', postData)
+      .subscribe({
+        next: () => {
+          alert('Post created successfully ✅');
+          this.content = '';
+        },
+        error: (err) => {
+          console.error('Post error:', err);
+          alert('Error creating post ❌');
+        },
+      });
   }
 }

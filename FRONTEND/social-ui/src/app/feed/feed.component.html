@@ -1,11 +1,11 @@
-<h2>Feed</h2>
+<h2>Your Feed</h2>
 
-<input [(ngModel)]="content" placeholder="What's on your mind?" />
-<button (click)="post()">Post</button>
+<div *ngIf="posts.length === 0">
+  <p>No posts from followed users yet.</p>
+</div>
 
-<hr />
-
-<div *ngFor="let p of posts">
-  <b>{{ p.username }}</b>
-  <p>{{ p.content }}</p>
+<div *ngFor="let post of posts" class="post-card">
+  <h4>{{ post.username }}</h4>
+  <p>{{ post.content }}</p>
+  <small>{{ post.createdAt }}</small>
 </div>

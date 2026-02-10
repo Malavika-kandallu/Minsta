@@ -4,4 +4,5 @@ client = MongoClient("mongodb://127.0.0.1:27017")
 
 db = client["social_app"]
 
-users = db["users"]   # collection
+users = db["users"]
+posts = db["posts"]

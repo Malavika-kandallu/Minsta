@@ -1,29 +1,204 @@
-/* Full page layout */
-.page {
+/* ===== Layout ===== */
+.dashboard-container {
+  display: flex;
   height: 100vh;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  background: #eef2f7;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #1976d2, #125aa0);
+  color: white;
+  padding: 24px 18px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  font-family: Arial, sans-serif;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Title */
-.title {
-  color: white;
+/* App title */
+.sidebar h2 {
   margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 
-/* Side-by-side container */
-.auth-container {
+/* Menu list */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+/* Hover */
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Active route */
+.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Logout button */
+.logout-btn {
+  margin-top: auto;
+  padding: 10px;
+  border: none;
+  background: #e53935;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+.logout-btn:hover {
+  background: #b71c1c;
+}
+
+/* ===== Content Area ===== */
+.content {
+  flex: 1;
+  padding: 28px;
+  overflow-y: auto;
+}
+
+/* ===== Top Search Bar ===== */
+.search-box {
   display: flex;
-  gap: 40px;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .auth-container {
+/* Input */
+.search-box input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d0d7e2;
+  outline: none;
+  font-size: 14px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Search button */
+.search-box button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+  font-weight: 500;
+}
+
+.search-box button:hover {
+  background: #125aa0;
+}
+
+/* ===== User Cards ===== */
+.user-card {
+  background: white;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Hover lift effect */
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Username text */
+.user-card span {
+  font-weight: 600;
+  color: #333;
+}
+
+/* ===== Buttons ===== */
+.follow-btn,
+.unfollow-btn {
+  border: none;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+/* Follow */
+.follow-btn {
+  background: #4caf50;
+  color: white;
+  margin-right: 8px;
+}
+
+.follow-btn:hover {
+  background: #2e7d32;
+}
+
+/* Unfollow */
+.unfollow-btn {
+  background: #e53935;
+  color: white;
+}
+
+.unfollow-btn:hover {
+  background: #b71c1c;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .search-box input {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  .dashboard-container {
     flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sidebar ul {
+    display: flex;
+    gap: 10px;
+  }
+
+  .logout-btn {
+    margin-top: 0;
   }
 }

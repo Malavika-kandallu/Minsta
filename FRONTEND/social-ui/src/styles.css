@@ -2,9 +2,9 @@
 /* Full page center */
 
 /* Reset default margin */
-body, html {
+html {
   margin: 0;
-  height: 100%;
+  height: 100vh;
 }
 
 /* Full page gradient background */
