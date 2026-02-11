@@ -1,56 +1,19 @@
 <div class="dashboard-container">
-  <!-- Sidebar -->
+
   <nav class="sidebar">
     <h2>Minsta</h2>
 
     <ul>
       <li routerLink="feed" routerLinkActive="active">Feed</li>
       <li routerLink="create" routerLinkActive="active">Create Post</li>
+      <li routerLink="search" routerLinkActive="active">Search Users</li>
     </ul>
 
     <button class="logout-btn" (click)="logout()">Logout</button>
   </nav>
 
-  <!-- Main Content -->
   <div class="content">
-
-    <!-- 🔍 User Search -->
-    <div class="search-box">
-      <input
-        [(ngModel)]="searchText"
-        placeholder="Search users..."
-      />
-      <button (click)="searchUsers()">Search</button>
-    </div>
-
-    <!-- 👥 Search Results -->
-    <div *ngFor="let user of users" class="user-card">
-
-  <span>{{ user.username }}</span>
-
-  <div *ngIf="user.username !== currentUser">
-
-    <!-- Show Follow only if NOT following -->
-    <button
-      *ngIf="!user.isFollowing"
-      class="follow-btn"
-      (click)="follow(user.username)">
-      Follow
-    </button>
-
-    <!-- Show Unfollow only if following -->
-    <button
-      *ngIf="user.isFollowing"
-      class="unfollow-btn"
-      (click)="unfollow(user.username)">
-      Unfollow
-    </button>
-
-  </div>
-
-</div>
-
-    <!-- Child Routes -->
     <router-outlet></router-outlet>
   </div>
+
 </div>

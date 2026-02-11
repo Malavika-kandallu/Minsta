@@ -14,23 +14,39 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],
+
     children: [
 
-      // ✅ DEFAULT LOAD FEED
+      // ✅ Default → Feed
       { path: '', redirectTo: 'feed', pathMatch: 'full' },
 
+      // 📰 Feed
       {
         path: 'feed',
         loadComponent: () =>
           import('./feed/feed.component')
             .then((m) => m.FeedComponent),
       },
+
+      // ➕ Create Post
       {
         path: 'create',
         loadComponent: () =>
           import('./create-post/create-post.component')
             .then((m) => m.CreatePostComponent),
       },
+
+      // 🔍 Search Users (NEW)
+      {
+        path: 'search',
+        loadComponent: () =>
+          import('./dashboard/search-users/search-users.component')
+            .then((m) => m.SearchUsersComponent),
+      },
+
     ],
   },
+
+  // ❌ Invalid route fallback (optional but recommended)
+  { path: '**', redirectTo: '' }
 ];

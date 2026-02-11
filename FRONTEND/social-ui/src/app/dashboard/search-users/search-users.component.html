@@ -1,0 +1,37 @@
+<div class="search-page">
+
+  <!-- 🔍 Search Box -->
+  <div class="search-box">
+    <input
+      [(ngModel)]="searchText"
+      placeholder="Search users..."
+    />
+    <button (click)="searchUsers()">Search</button>
+  </div>
+
+  <!-- 👥 Results -->
+  <div *ngFor="let user of users" class="user-card">
+
+    <span>{{ user.username }}</span>
+
+    <div *ngIf="user.username !== currentUser">
+
+      <button
+        *ngIf="!user.isFollowing"
+        class="follow-btn"
+        (click)="follow(user.username)">
+        Follow
+      </button>
+
+      <button
+        *ngIf="user.isFollowing"
+        class="unfollow-btn"
+        (click)="unfollow(user.username)">
+        Unfollow
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
