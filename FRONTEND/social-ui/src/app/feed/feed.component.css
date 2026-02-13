@@ -1,15 +1,76 @@
 .feed-container {
-  max-width: 600px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.feed-header {
+  background: var(--fb-white);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.feed-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--fb-text);
 }
 
 .post-card {
-  background: white;
+  background: var(--fb-white);
+  border-radius: 8px;
   padding: 16px;
-  margin-bottom: 14px;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
 }
+
 .post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--fb-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.post-info h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fb-text);
+}
+
+.post-time {
+  font-size: 13px;
+  color: var(--fb-text-secondary);
+}
+
+.post-content {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fb-text);
+}
+
+.empty-feed {
+  text-align: center;
+  padding: 40px;
+  background: var(--fb-white);
+  border-radius: 8px;
+  color: var(--fb-text-secondary);
 }

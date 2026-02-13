@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-search-users',
@@ -9,43 +11,51 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './search-users.component.html',
   styleUrls: ['./search-users.component.css']
 })
-export class SearchUsersComponent {
-
+export class SearchUsersComponent implements OnDestroy {
   searchText = '';
   users: any[] = [];
-  currentUser = localStorage.getItem('username');
+  currentUser = '';
+  private destroy$ = new Subject<void>();
 
-  // 🔍 Search
+  constructor(private api: ApiService) {
+    if (typeof window !== 'undefined') {
+      this.currentUser = localStorage.getItem('username') || '';
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   searchUsers() {
-    console.log('Searching for:', this.searchText);
+    if (!this.searchText.trim()) return;
 
-    // TEMP MOCK DATA (for testing UI)
-    this.users = [
-      { username: 'john', isFollowing: false },
-      { username: 'alice', isFollowing: true },
-      { username: 'mike', isFollowing: false }
-    ];
+    this.api.searchUsers(this.searchText, this.currentUser)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => this.users = res,
+        error: (err) => console.error('Search error', err)
+      });
   }
 
-  // ➕ Follow
   follow(username: string) {
-    console.log('Follow', username);
-
-    this.users = this.users.map(u =>
-      u.username === username
-        ? { ...u, isFollowing: true }
-        : u
-    );
+    this.api.follow(this.currentUser, username)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.users = this.users.map(u =>
+          u.username === username ? { ...u, isFollowing: true } : u
+        );
+      });
   }
 
-  // ➖ Unfollow
   unfollow(username: string) {
-    console.log('Unfollow', username);
-
-    this.users = this.users.map(u =>
-      u.username === username
-        ? { ...u, isFollowing: false }
-        : u
-    );
+    this.api.unfollow(this.currentUser, username)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.users = this.users.map(u =>
+          u.username === username ? { ...u, isFollowing: false } : u
+        );
+      });
   }
 }

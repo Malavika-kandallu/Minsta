@@ -1,75 +1,51 @@
-/* Page background (optional but looks better) */
-body {
-  background-color: #f4f6f8;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Container Card */
 .create-post-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.create-post-box {
+  background: var(--fb-white);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.create-post-box h2 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  color: var(--fb-text);
+}
+
+.create-post-box textarea {
   width: 100%;
-  max-width: 520px;
-  margin: 50px auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-}
-
-/* Heading (if you add one) */
-.create-post-container h2 {
-  margin: 0;
-  text-align: center;
-  color: #333;
-}
-
-/* Textarea Styling */
-textarea {
+  min-height: 100px;
   padding: 12px;
-  font-size: 14px;
-  min-height: 120px;
+  border: 1px solid var(--fb-border);
+  border-radius: 8px;
+  font-size: 15px;
   resize: vertical;
-
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  outline: none;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  margin-bottom: 12px;
 }
 
-/* Focus Effect */
-textarea:focus {
-  border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
-}
-
-/* Button Styling */
-button {
-  width: 140px;
+.create-post-box button {
+  width: 100%;
   padding: 10px;
-  align-self: flex-end;
-
-  background: linear-gradient(135deg, #1976d2, #125aa0);
+  background-color: var(--fb-blue);
   color: white;
-  font-weight: 600;
-
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Hover Effect */
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.create-post-box button:hover {
+  background-color: var(--fb-blue-hover);
 }
 
-/* Click Effect */
-button:active {
-  transform: translateY(0);
-  box-shadow: none;
+.create-post-box button:disabled {
+  background-color: var(--fb-border);
+  cursor: not-allowed;
 }

@@ -1,32 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../services/auth.service';
+import { RouterModule, Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './signup.component.html'
+  imports: [CommonModule, FormsModule, RouterModule],
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
   username = '';
   password = '';
+  private destroy$ = new Subject<void>();
 
-  constructor(private auth: AuthService) {}
+  constructor(private api: ApiService, private router: Router) {}
 
- signup() {
-  this.auth.signup({
-    username: this.username,
-    password: this.password
-  }).subscribe({
-    next: (res: any) => {
-      alert(res.message);   // ✅ message exists
-    },
-    error: (err) => {
-      alert(err.error.detail); // ✅ detail exists
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  signup() {
+    if (!this.username || !this.password) {
+      alert('Please fill all fields');
+      return;
     }
-  });
-}
 
+    this.api.signup({ username: this.username, password: this.password })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          alert(res.message);
+          this.router.navigate(['/login']);
+        },
+        error: (err) => alert(err.error.detail)
+      });
+  }
 }

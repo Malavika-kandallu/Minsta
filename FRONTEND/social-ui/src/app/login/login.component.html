@@ -1,20 +1,19 @@
-<div class="login-page">
-  <div class="auth-card">
-    <h2>Login</h2>
+<div class="login-container">
+  <div class="login-box">
+    <h2>Minsta</h2>
+    
+    <div class="form-group">
+      <input [(ngModel)]="username" placeholder="Email or username" type="text" />
+    </div>
 
-    <!-- Username -->
-    <input [(ngModel)]="username" placeholder="Username" type="text" />
+    <div class="form-group">
+      <input [(ngModel)]="password" type="password" placeholder="Password" />
+    </div>
 
-    <!-- Password -->
-    <input [(ngModel)]="password" type="password" placeholder="Password" />
+    <button (click)="login()">Log In</button>
 
-    <!-- Login Button -->
-    <button (click)="login()">Login</button>
-
-    <!-- Signup Navigation -->
-    <p class="signup-text">
-      Don’t have an account?
-      <a routerLink="/signup">Sign up</a>
-    </p>
+    <div class="signup-link">
+      <a routerLink="/signup">Create new account</a>
+    </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background-color: var(--fb-bg);
 }
 
-.login-box {
+.signup-box {
   background: var(--fb-white);
   padding: 40px;
   border-radius: 8px;
@@ -14,18 +14,24 @@
   width: 400px;
 }
 
-.login-box h2 {
+.signup-box h2 {
   text-align: center;
   color: var(--fb-blue);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 32px;
+}
+
+.signup-box p {
+  text-align: center;
+  color: var(--fb-text-secondary);
+  margin-bottom: 20px;
 }
 
 .form-group {
   margin-bottom: 16px;
 }
 
-.login-box input {
+.signup-box input {
   width: 100%;
   padding: 14px 16px;
   border: 1px solid var(--fb-border);
@@ -33,10 +39,10 @@
   font-size: 17px;
 }
 
-.login-box button {
+.signup-box button {
   width: 100%;
   padding: 14px;
-  background-color: var(--fb-blue);
+  background-color: var(--fb-green);
   color: white;
   border: none;
   border-radius: 6px;
@@ -46,18 +52,16 @@
   margin-top: 10px;
 }
 
-.login-box button:hover {
-  background-color: var(--fb-blue-hover);
+.signup-box button:hover {
+  background-color: #36a420;
 }
 
-.signup-link {
+.login-link {
   text-align: center;
   margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--fb-border);
 }
 
-.signup-link a {
+.login-link a {
   color: var(--fb-blue);
   text-decoration: none;
   font-weight: 600;

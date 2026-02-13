@@ -1,75 +1,54 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  inject
-} from '@angular/core';
-
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../services/api.service';
+import { TimeAgoPipe } from '../pipes/time-ago.pipe';
+import { HighlightDirective } from '../directives/highlight.directive';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TimeAgoPipe, HighlightDirective],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css'],
 })
-export class FeedComponent implements OnInit {
-
+export class FeedComponent implements OnInit, OnDestroy {
   posts: any[] = [];
-  username: string = '';
+  username = '';
+  private destroy$ = new Subject<void>();
 
-  // Inject services
-  private http = inject(HttpClient);
-  private cd = inject(ChangeDetectorRef);
+  constructor(
+    private api: ApiService,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  // 🚀 Runs when feed loads
   ngOnInit() {
-
-    // Browser-only guard (SSR safe)
     if (typeof window === 'undefined') return;
 
-    // Get logged user
-    this.username =
-      localStorage.getItem('username') || '';
+    this.username = localStorage.getItem('username') || '';
 
-    if (!this.username) {
-      console.warn('No logged-in user');
-      return;
-    }
+    if (!this.username) return;
 
-    // Load feed after slight delay
-    // (ensures router + DOM ready)
-    setTimeout(() => {
-      this.loadFeed();
-    }, 0);
+    setTimeout(() => this.loadFeed(), 0);
   }
 
-  // 🔹 Load personalized feed
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadFeed() {
-
-    this.http
-      .get<any[]>(
-        `http://localhost:8000/api/feed/${this.username}`
-      )
+    this.api.getFeed(this.username)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-
         next: (data) => {
-
           this.posts = data || [];
-
-          // ⭐ Force UI render immediately
           this.cd.detectChanges();
         },
-
-        error: (err) => {
-          console.error('Feed load error:', err);
-        },
+        error: (err) => console.error('Feed load error:', err)
       });
   }
 
-  // 🔄 Manual refresh support
   refreshFeed() {
     this.loadFeed();
   }

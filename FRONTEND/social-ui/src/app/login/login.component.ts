@@ -1,23 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  username: string = '';
-  password: string = '';
+export class LoginComponent implements OnInit, OnDestroy {
+  username = '';
+  password = '';
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private api: ApiService
   ) {}
+
+  ngOnInit() {
+    if (typeof window !== 'undefined' && localStorage.getItem('token')) {
+      this.router.navigate(['/dashboard/feed']);
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   login() {
     if (!this.username || !this.password) {
@@ -25,31 +39,16 @@ export class LoginComponent {
       return;
     }
 
-    const loginData = {
-      username: this.username,
-      password: this.password,
-    };
-
-    // 🔹 Call FastAPI login API
-    this.http
-      .post<any>('http://localhost:8000/auth/login', loginData)
+    this.api.login({ username: this.username, password: this.password })
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          console.log('Login success:', res);
-
-          // ✅ Store JWT token
           localStorage.setItem('token', res.token);
-
-          // ✅ Store logged-in username
           localStorage.setItem('username', this.username);
-
-          // Navigate to dashboard
           this.router.navigate(['/dashboard/feed']);
         },
-        error: (err) => {
-          console.error(err);
-          alert('Invalid credentials ❌');
-        },
+        error: () => alert('Invalid credentials ❌')
       });
   }
+
 }

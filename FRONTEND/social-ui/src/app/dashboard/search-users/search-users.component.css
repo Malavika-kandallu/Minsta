@@ -1,60 +1,82 @@
 .search-page {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 20px;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .search-box {
+  background: var(--fb-white);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
 }
 
 .search-box input {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--fb-border);
+  border-radius: 20px;
+  font-size: 15px;
+  background-color: var(--fb-bg);
 }
 
 .search-box button {
-  padding: 10px 16px;
-  border: none;
-  background: #1976d2;
+  padding: 10px 24px;
+  background-color: var(--fb-blue);
   color: white;
-  border-radius: 8px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .search-box button:hover {
-  background: #125aa0;
+  background-color: var(--fb-blue-hover);
 }
 
 .user-card {
+  background: var(--fb-white);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #f5f5f5;
-  border-radius: 8px;
+}
+
+.user-card span {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--fb-text);
 }
 
 .follow-btn {
-  background: #1976d2;
+  padding: 8px 24px;
+  background-color: var(--fb-blue);
   color: white;
   border: none;
-  padding: 6px 12px;
   border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
 }
 
+.follow-btn:hover {
+  background-color: var(--fb-blue-hover);
+}
+
 .unfollow-btn {
-  background: #e53935;
-  color: white;
+  padding: 8px 24px;
+  background-color: var(--fb-hover);
+  color: var(--fb-text);
   border: none;
-  padding: 6px 12px;
   border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
+}
+
+.unfollow-btn:hover {
+  background-color: var(--fb-border);
 }

@@ -1,9 +1,8 @@
-// src/app/create-post/create-post.component.ts
-
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
@@ -12,17 +11,20 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
-export class CreatePostComponent {
-  content: string = '';
+export class CreatePostComponent implements OnDestroy {
+  content = '';
+  username = '';
+  private destroy$ = new Subject<void>();
 
-  // ✅ Logged-in username
-  username: string = '';
-
-  constructor(private http: HttpClient) {
-    // SSR safe localStorage access
+  constructor(private api: ApiService) {
     if (typeof window !== 'undefined') {
       this.username = localStorage.getItem('username') || '';
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   submitPost() {
@@ -36,22 +38,14 @@ export class CreatePostComponent {
       return;
     }
 
-    const postData = {
-      username: this.username,
-      content: this.content,
-    };
-
-    this.http
-      .post('http://localhost:8000/api/posts', postData)
+    this.api.createPost({ username: this.username, content: this.content })
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           alert('Post created successfully ✅');
           this.content = '';
         },
-        error: (err) => {
-          console.error('Post error:', err);
-          alert('Error creating post ❌');
-        },
+        error: () => alert('Error creating post ❌')
       });
   }
 }

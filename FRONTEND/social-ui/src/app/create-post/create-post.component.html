@@ -1,11 +1,13 @@
 <div class="create-post-container">
-  <h2>Create Post</h2>
+  <div class="create-post-box">
+    <h2>Create Post</h2>
 
-  <textarea
-    [(ngModel)]="content"
-    placeholder="What's on your mind?"
-    rows="5"
-  ></textarea>
+    <textarea
+      [(ngModel)]="content"
+      placeholder="What's on your mind, {{ username }}?"
+      rows="5"
+    ></textarea>
 
-  <button (click)="submitPost()">Post</button>
+    <button (click)="submitPost()" [disabled]="!content.trim()">Post</button>
+  </div>
 </div>

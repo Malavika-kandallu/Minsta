@@ -1,8 +1,20 @@
-<div class="auth-card">
-  <h2>Sign Up</h2>
+<div class="signup-container">
+  <div class="signup-box">
+    <h2>Sign Up</h2>
+    <p>It's quick and easy.</p>
+    
+    <div class="form-group">
+      <input [(ngModel)]="username" placeholder="Username" type="text" />
+    </div>
 
-  <input [(ngModel)]="username" placeholder="Username" />
-  <input [(ngModel)]="password" type="password" placeholder="Password" />
+    <div class="form-group">
+      <input [(ngModel)]="password" type="password" placeholder="Password" />
+    </div>
 
-  <button (click)="signup()">Create Account</button>
+    <button (click)="signup()">Sign Up</button>
+
+    <div class="login-link">
+      <a routerLink="/login">Already have an account?</a>
+    </div>
+  </div>
 </div>

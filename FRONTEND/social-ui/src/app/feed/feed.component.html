@@ -1,11 +1,20 @@
-<h2>Your Feed</h2>
+<div class="feed-container">
+  <div class="feed-header">
+    <h2>Your Feed</h2>
+  </div>
 
-<div *ngIf="posts.length === 0">
-  <p>No posts from followed users yet.</p>
-</div>
+  <div *ngIf="posts.length === 0" class="empty-feed">
+    <p>No posts from followed users yet. Start following people to see their posts!</p>
+  </div>
 
-<div *ngFor="let post of posts" class="post-card">
-  <h4>{{ post.username }}</h4>
-  <p>{{ post.content }}</p>
-  <small>{{ post.createdAt }}</small>
+  <div *ngFor="let post of posts" class="post-card" appHighlight>
+    <div class="post-header">
+      <div class="post-avatar">{{ post.username.charAt(0).toUpperCase() }}</div>
+      <div class="post-info">
+        <h3>{{ post.username }}</h3>
+        <span class="post-time">{{ post.createdAt | timeAgo }}</span>
+      </div>
+    </div>
+    <div class="post-content">{{ post.content }}</div>
+  </div>
 </div>
